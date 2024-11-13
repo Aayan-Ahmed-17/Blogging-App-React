@@ -1,5 +1,5 @@
 import {app, auth, db} from './firebaseConfig'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile , signInWithEmailAndPassword , signOut } from 'firebase/auth';
 
 const signUpUser = async (email, password, displayName) => {
     try {
@@ -44,4 +44,71 @@ const signUpUser = async (email, password, displayName) => {
         };
     }
 };
-export {signUpUser}
+
+const loginUser = async (email, password) => {
+    try {
+        const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        return {
+            success: true,
+            user: userCredential.user,
+            message: "Login successful!"
+        };
+
+    } catch (error) {
+        let errorMessage;
+        switch (error.code) {
+            case 'auth/user-not-found':
+                errorMessage = 'No user found with this email';
+                break;
+            case 'auth/wrong-password':
+                errorMessage = 'Incorrect password';
+                break;
+            case 'auth/invalid-email':
+                errorMessage = 'Invalid email format';
+                break;
+            case 'auth/user-disabled':
+                errorMessage = 'This account has been disabled';
+                break;
+            default:
+                errorMessage = error.message;
+        }
+
+        return {
+            success: false,
+            error: errorMessage
+        };
+    }
+};
+
+const logoutUser = async () => {
+    try {
+        await signOut(auth);
+        
+        return {
+            success: true,
+            message: "Logged out successfully!"
+        };
+
+    } catch (error) {
+        let errorMessage;
+        switch (error.code) {
+            case 'auth/no-current-user':
+                errorMessage = 'No user is currently signed in';
+                break;
+            default:
+                errorMessage = 'Error signing out. Please try again.';
+        }
+
+        return {
+            success: false,
+            error: errorMessage
+        };
+    }
+};
+
+export {signUpUser , loginUser , logoutUser}
