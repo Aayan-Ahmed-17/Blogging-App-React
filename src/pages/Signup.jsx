@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import { signUpUser } from '../configs/firebase/firebasemethods'
 import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
@@ -16,17 +15,17 @@ const Signup = () => {
     event.preventDefault();
 
 
-    signUpUser({
-      email: email.current.value,
-      password: password.current.value,
-      fullname: fullName.current.value
-    }).then((res) => {
-      console.log(res)
-      navigate('/login');
+    // signUpUser({
+    //   email: email.current.value,
+    //   password: password.current.value,
+    //   fullname: fullName.current.value
+    // }).then((res) => {
+    //   console.log(res)
+    //   navigate('/login');
 
-    }).catch((err) => {
-      console.log(err)
-    })
+    // }).catch((err) => {
+    //   console.log(err)
+    // })
   }
 
   return (

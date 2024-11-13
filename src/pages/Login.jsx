@@ -4,10 +4,7 @@ import Header from '../components/Header'
 const Login = () => {
   return (
     <>
-    <Header title={"Login"}/>
-    <h1>
-      Login
-    </h1>
+    <h1>sdjkfldksj</h1>
     </>
   )
 }

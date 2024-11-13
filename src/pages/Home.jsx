@@ -4,10 +4,9 @@ import Blog from '../components/Blog'
 const Home = () => {
   return (
     <>
-    <Blog />
-    {/* <h1>
+    <h1>
       Home
-    </h1> */}
+    </h1>
     </>
   )
 }
