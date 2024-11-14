@@ -1,6 +1,6 @@
 import {app, auth, db} from './firebaseConfig'
 import { createUserWithEmailAndPassword, updateProfile , signInWithEmailAndPassword , signOut } from 'firebase/auth';
-import { collection , addDoc , query, where, getDocs} from 'firebase/firestore';
+import { collection , addDoc , query, where, getDocs , doc, deleteDoc } from 'firebase/firestore';
 
 const signUpUser = async (email, password, fullName) => {
     try {
@@ -133,13 +133,17 @@ const sendData = async (collectionName, obj, setLoading, setData) => {
       }      
 }
 
-const getData = async (collectionName, searchProperty, compareProperty) => {
+const getData = async (collectionName, searchProperty, compareProperty, setData) => {
     const q = query(collection(db, collectionName), where(searchProperty, "==", compareProperty));
 
+    const resData = []
 const querySnapshot = await getDocs(q);
 querySnapshot.forEach((doc) => {
   console.log(doc.id, " => ", doc.data());
+  resData.push({...doc.data() , docid: doc.id})
 });
+        setData((prev)=>[...prev, ...resData])
+        console.log(resData, doc.id)
 }
 
 const getAllData = async (collectionName) => {
@@ -150,4 +154,9 @@ querySnapshot.forEach((doc) => {
 });
 }
 
-export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData}
+const deleteData = async (collectionName, docId) => {
+    await deleteDoc(doc(db, collectionName, docId));
+    console.log("document deleted successfully")
+}
+
+export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData, deleteData}

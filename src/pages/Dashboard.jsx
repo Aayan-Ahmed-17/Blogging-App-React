@@ -2,9 +2,11 @@ import React, { useRef, useState , useEffect } from 'react'
 import { getData, logoutUser , sendData} from '../configs/firebase/firebasemethods'
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../configs/firebase/firebaseConfig';
+import Blog from '../components/Blog';
 
 const Dashboard = () => {
   const [data, setData] = useState([])
+  const [dbDocId, setDbDocId] = useState(null)
   const [loading, setLoading] = useState()
 
   const title = useRef()
@@ -31,7 +33,7 @@ const Dashboard = () => {
       let obj = {
         title: title.current.value,
         description: description.current.value,
-        uid: auth.currentUser.uid
+        uid: auth.currentUser.uid,
       }
       const result = await sendData("blogs", obj, setLoading, setData)
       if (result.success){
@@ -42,9 +44,10 @@ const Dashboard = () => {
     }
     
     useEffect(() => {
-      getData("blogs", "uid", auth.currentUser.uid)
+      getData("blogs", "uid", auth.currentUser.uid, setData)
       console.log("Data updated:", data);
-    }, [data]);
+      console.log(data)
+    }, []);
 
 
   return (
@@ -59,6 +62,9 @@ const Dashboard = () => {
 
         <button type='submit' className="btn btn-primary" > {loading ? <span className="loading loading-spinner loading-sm"></span> : 'Publish Blogs'}</button>
       </form>
+      {data && console.log(data)}
+      {/* {data && console.log(data.length)} */}
+      {/* <Blog modify={true} setDbDocId={setDbDocId} currentDocId={"current id paas krni hahi prop ke thr"}/> */}
     </>
   )
 }
