@@ -1,5 +1,6 @@
 import {app, auth, db} from './firebaseConfig'
 import { createUserWithEmailAndPassword, updateProfile , signInWithEmailAndPassword , signOut } from 'firebase/auth';
+import { collection , addDoc } from 'firebase/firestore';
 
 const signUpUser = async (email, password, displayName) => {
     try {
@@ -111,4 +112,26 @@ const logoutUser = async () => {
     }
 };
 
-export {signUpUser , loginUser , logoutUser}
+const sendData = async (collectionName, obj, setLoading, setData) => {
+    try {
+        setLoading(true)
+        const docRef = await addDoc(collection(db, collectionName), obj);
+        console.log("Document written with ID: ", docRef.id);
+        const newBlog = { ...obj, docId: docRef.id }
+        setData((prev)=>[...prev, newBlog])
+        return {
+            success: true,
+            message: "Blog added successfully"
+        };
+      } catch (e) {
+        console.error("Error adding document: ", e);
+        return {
+            success: false,
+            error: e
+        };
+      } finally{
+        setLoading(false)
+      }      
+}
+
+export {signUpUser , loginUser , logoutUser , sendData}
