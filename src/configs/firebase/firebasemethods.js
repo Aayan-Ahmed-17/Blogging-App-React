@@ -1,8 +1,8 @@
 import {app, auth, db} from './firebaseConfig'
 import { createUserWithEmailAndPassword, updateProfile , signInWithEmailAndPassword , signOut } from 'firebase/auth';
-import { collection , addDoc } from 'firebase/firestore';
+import { collection , addDoc , query, where, getDocs} from 'firebase/firestore';
 
-const signUpUser = async (email, password, displayName) => {
+const signUpUser = async (email, password, fullName) => {
     try {
         // Create new user with email and password
         const userCredential = await createUserWithEmailAndPassword(
@@ -12,9 +12,8 @@ const signUpUser = async (email, password, displayName) => {
         );
 
         // Update user profile with display name
-        await updateProfile(userCredential.user, {
-            displayName: displayName
-        });
+        const docRef = await addDoc(collection(db, "users"), {email, fullName, uid: userCredential.user.uid});
+        console.log("Document written with ID: ", docRef.id);
 
         return {
             success: true,
@@ -134,4 +133,21 @@ const sendData = async (collectionName, obj, setLoading, setData) => {
       }      
 }
 
-export {signUpUser , loginUser , logoutUser , sendData}
+const getData = async (collectionName, searchProperty, compareProperty) => {
+    const q = query(collection(db, collectionName), where(searchProperty, "==", compareProperty));
+
+const querySnapshot = await getDocs(q);
+querySnapshot.forEach((doc) => {
+  console.log(doc.id, " => ", doc.data());
+});
+}
+
+const getAllData = async (collectionName) => {
+
+const querySnapshot = await getDocs(collection(db, collectionName));
+querySnapshot.forEach((doc) => {
+  console.log(doc.data());
+});
+}
+
+export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData}

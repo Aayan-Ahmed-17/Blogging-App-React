@@ -1,6 +1,7 @@
 import React, { useRef, useState , useEffect } from 'react'
-import { logoutUser , sendData} from '../configs/firebase/firebasemethods'
+import { getData, logoutUser , sendData} from '../configs/firebase/firebasemethods'
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../configs/firebase/firebaseConfig';
 
 const Dashboard = () => {
   const [data, setData] = useState([])
@@ -18,6 +19,7 @@ const Dashboard = () => {
     const result = await logoutUser();
     if (result.success) {
         navigate('/login');
+        console.log(result)
     } else {
         console.log(result.error);
       }
@@ -28,7 +30,8 @@ const Dashboard = () => {
       event.preventDefault();
       let obj = {
         title: title.current.value,
-        description: description.current.value
+        description: description.current.value,
+        uid: auth.currentUser.uid
       }
       const result = await sendData("blogs", obj, setLoading, setData)
       if (result.success){
@@ -39,6 +42,7 @@ const Dashboard = () => {
     }
     
     useEffect(() => {
+      getData("blogs", "uid", auth.currentUser.uid)
       console.log("Data updated:", data);
     }, [data]);
 

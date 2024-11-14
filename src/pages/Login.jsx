@@ -11,8 +11,8 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     const result = await loginUser(email.current.value, password.current.value);
-    
     if (result.success) {
+        console.log(result)
         navigate('/dashboard');
     }
 };
