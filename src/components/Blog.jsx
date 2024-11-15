@@ -1,56 +1,6 @@
 import React, {useState} from "react";
 
-const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, e, index, handleDeleteBlog, isEditing, setEditingId, onUpdate}) => {
-    const [editData, setEditData] = useState({
-        title: e.title,
-        content: e.content
-      });
-
-      const handleEdit = () => {
-        setEditingId(e.id);
-        setEditData({ title: e.title, content: e.content });
-      };
-    
-      const handleSave = () => {
-        onUpdate({ docid: e.id, index }, editData);
-      };
-    
-      const handleCancel = () => {
-        setEditingId(null);
-        setEditData({ title: e.title, content: e.content });
-      };
-
-      if (isEditing) {
-        return (
-          <div className="blog-card">
-            <input
-              type="text"
-              value={editData.title}
-              onChange={(e) => setEditData(prev => ({ ...prev, title: e.target.value }))}
-              className="input input-bordered w-full mb-2"
-            />
-            <textarea
-              value={editData.content}
-              onChange={(e) => setEditData(prev => ({ ...prev, content: e.target.value }))}
-              className="textarea textarea-bordered w-full mb-2"
-            />
-            <div className="flex gap-2">
-              <button 
-                onClick={handleSave}
-                className="text-green-600 hover:text-green-800"
-              >
-                Save
-              </button>
-              <button 
-                onClick={handleCancel}
-                className="text-red-600 hover:text-red-800"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        );
-      }
+const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, e, index, handleDeleteBlog, handleEditBlog, titlemain, descriptionmain}) => {
 
     // card title
     // userid & image
@@ -69,7 +19,7 @@ const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, e
                 </div> {/** card header */}
                 <div className=" text-gray-500 min-h-60 mt-2"><p>{description}</p></div> {/** card Body */}
                 {modify && <div className="bg-white flex gap-4 mt-3">
-                    <button type="button" className="text-purple-700" onClick={handleEdit}>Edit</button>
+                    <button type="button" className="text-purple-700" onClick={()=>handleEditBlog(index, titlemain, descriptionmain)}>Edit</button>
                     <button type="button" className="text-purple-700" onClick={() => {
                 setDbDocId({
                   docid: docId,

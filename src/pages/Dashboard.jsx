@@ -8,7 +8,6 @@ const Dashboard = () => {
   const [data, setData] = useState([])
   const [dbDocId, setDbDocId] = useState(null);
   const [loading, setLoading] = useState()
-  const [editingId, setEditingId] = useState(null);
 
   const title = useRef()
   const description = useRef()
@@ -56,6 +55,17 @@ const Dashboard = () => {
       setData([...data])
       console.log(result)
     }
+
+    // const handleEditBlog = async (item, docid, updateObj) => {
+    //   const result = editData("blogs", docid.docid, updateObj)
+    // }
+
+    function getIndexOnEidt(index, titlemain, descriptionmain){
+      console.log("index===>",index)
+      console.log(data[index])
+      titlemain.current.value = data[index].title
+      descriptionmain.current.value = data[index].description
+    }
     
     // const handleEditBlog = async (docid, title, desc) => {
     //   let result = await editData("blogs", docid.docid, title, desc)
@@ -66,25 +76,25 @@ const Dashboard = () => {
     //   })
     // }
 
-    const handleUpdateBlog = async(docid, updatedData) => {
-      try {
-        const result = await editData("blogs", docid, updatedData);
-        if (result.success) {
-          setData(prevData => prevData.map((item, index) => {
-            if (index === docid.index) {
-              return { ...item, ...updatedData };
-            }
-            return item;
-          }));
-          toast.success("Blog updated successfully");
-        }
-      } catch (error) {
-        toast.error("Failed to update blog");
-        console.error(error);
-      } finally {
-        setEditingId(null); // Exit edit mode
-      }
-    };
+    // const handleUpdateBlog = async(docid, updatedData) => {
+    //   try {
+    //     const result = await editData("blogs", docid, updatedData);
+    //     if (result.success) {
+    //       setData(prevData => prevData.map((item, index) => {
+    //         if (index === docid.index) {
+    //           return { ...item, ...updatedData };
+    //         }
+    //         return item;
+    //       }));
+    //       toast.success("Blog updated successfully");
+    //     }
+    //   } catch (error) {
+    //     toast.error("Failed to update blog");
+    //     console.error(error);
+    //   } finally {
+    //     setEditingId(null); // Exit edit mode
+    //   }
+    // };
 
   return (
     <>
@@ -100,8 +110,7 @@ const Dashboard = () => {
       </form>
       {data.length > 0 && data.map((e , i)=> {
         // {dbDocId && console.log(dbDocId)}
-        return <Blog key={i} title={e.title} description={e.description} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} e={e} index={i} handleDeleteBlog={handleDeleteBlog} 
-        isEditing={editingId === e.id} setEditingId={setEditingId} onUpdate={handleUpdateBlog}/>
+        return <Blog key={i} title={e.title} description={e.description} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} e={e} index={i} handleDeleteBlog={handleDeleteBlog} handleEditBlog={getIndexOnEidt} titlemain={title} descriptionmain={description}/>
       }
       )}
       
