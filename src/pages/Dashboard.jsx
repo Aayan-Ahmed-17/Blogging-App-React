@@ -1,12 +1,12 @@
 import React, { useRef, useState , useEffect } from 'react'
-import { getData, logoutUser , sendData} from '../configs/firebase/firebasemethods'
+import { deleteData, getData, logoutUser , sendData} from '../configs/firebase/firebasemethods'
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../configs/firebase/firebaseConfig';
 import Blog from '../components/Blog';
 
 const Dashboard = () => {
   const [data, setData] = useState([])
-  const [dbDocId, setDbDocId] = useState(null)
+  const [dbDocId, setDbDocId] = useState(null);
   const [loading, setLoading] = useState()
 
   const title = useRef()
@@ -49,6 +49,12 @@ const Dashboard = () => {
       console.log(data)
     }, []);
 
+    const handleDeleteBlog = async(docid) => {
+      let result = await deleteData("blogs", docid.docid)
+      data.splice(docid.index, 1)
+      setData([...data])
+      console.log(result)
+    }
 
   return (
     <>
@@ -62,9 +68,12 @@ const Dashboard = () => {
 
         <button type='submit' className="btn btn-primary" > {loading ? <span className="loading loading-spinner loading-sm"></span> : 'Publish Blogs'}</button>
       </form>
-      {data && console.log(data)}
-      {/* {data && console.log(data.length)} */}
-      {/* <Blog modify={true} setDbDocId={setDbDocId} currentDocId={"current id paas krni hahi prop ke thr"}/> */}
+      {data.length > 0 && data.map((e , i)=> {
+        // {dbDocId && console.log(dbDocId)}
+        return <Blog key={i} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} index={i} handleDeleteBlog={handleDeleteBlog}/>
+      }
+      )}
+      
     </>
   )
 }

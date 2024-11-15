@@ -156,7 +156,10 @@ querySnapshot.forEach((doc) => {
 
 const deleteData = async (collectionName, docId) => {
     await deleteDoc(doc(db, collectionName, docId));
-    console.log("document deleted successfully")
+    return{
+        success: true,
+        message: "document deleted successfully"
+    }
 }
 
 export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData, deleteData}
