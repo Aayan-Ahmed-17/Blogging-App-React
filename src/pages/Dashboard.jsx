@@ -1,5 +1,5 @@
 import React, { useRef, useState , useEffect } from 'react'
-import { deleteData, getData, logoutUser , sendData} from '../configs/firebase/firebasemethods'
+import { deleteData, editData, getData, logoutUser , sendData} from '../configs/firebase/firebasemethods'
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../configs/firebase/firebaseConfig';
 import Blog from '../components/Blog';
@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [data, setData] = useState([])
   const [dbDocId, setDbDocId] = useState(null);
   const [loading, setLoading] = useState()
+  const [editingId, setEditingId] = useState(null);
 
   const title = useRef()
   const description = useRef()
@@ -55,6 +56,35 @@ const Dashboard = () => {
       setData([...data])
       console.log(result)
     }
+    
+    // const handleEditBlog = async (docid, title, desc) => {
+    //   let result = await editData("blogs", docid.docid, title, desc)
+    //   setData(prev => {
+    //     const newData = prev;
+    //     newData[docid.index] = {title, description: desc}
+    //     return newData
+    //   })
+    // }
+
+    const handleUpdateBlog = async(docid, updatedData) => {
+      try {
+        const result = await editData("blogs", docid, updatedData);
+        if (result.success) {
+          setData(prevData => prevData.map((item, index) => {
+            if (index === docid.index) {
+              return { ...item, ...updatedData };
+            }
+            return item;
+          }));
+          toast.success("Blog updated successfully");
+        }
+      } catch (error) {
+        toast.error("Failed to update blog");
+        console.error(error);
+      } finally {
+        setEditingId(null); // Exit edit mode
+      }
+    };
 
   return (
     <>
@@ -70,7 +100,8 @@ const Dashboard = () => {
       </form>
       {data.length > 0 && data.map((e , i)=> {
         // {dbDocId && console.log(dbDocId)}
-        return <Blog key={i} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} index={i} handleDeleteBlog={handleDeleteBlog}/>
+        return <Blog key={i} title={e.title} description={e.description} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} e={e} index={i} handleDeleteBlog={handleDeleteBlog} 
+        isEditing={editingId === e.id} setEditingId={setEditingId} onUpdate={handleUpdateBlog}/>
       }
       )}
       

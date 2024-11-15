@@ -1,6 +1,6 @@
 import {app, auth, db} from './firebaseConfig'
 import { createUserWithEmailAndPassword, updateProfile , signInWithEmailAndPassword , signOut } from 'firebase/auth';
-import { collection , addDoc , query, where, getDocs , doc, deleteDoc } from 'firebase/firestore';
+import { collection , addDoc , query, where, getDocs , doc, deleteDoc , updateDoc } from 'firebase/firestore';
 
 const signUpUser = async (email, password, fullName) => {
     try {
@@ -154,12 +154,28 @@ querySnapshot.forEach((doc) => {
 });
 }
 
-const deleteData = async (collectionName, docId) => {
-    await deleteDoc(doc(db, collectionName, docId));
+const deleteData = async (collectionName, docid) => {
+    await deleteDoc(doc(db, collectionName, docid));
     return{
         success: true,
         message: "document deleted successfully"
     }
 }
 
-export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData, deleteData}
+const editData = async (collectionName, docid, updatedData) => {
+    try {
+      await updateDoc(doc(db, collectionName, docid), updatedData);
+      return {
+        success: true,
+        message: "Document updated successfully"
+      };
+    } catch (error) {
+      console.error("Error updating document:", error);
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  };
+
+export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData, deleteData, editData}
