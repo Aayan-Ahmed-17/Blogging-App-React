@@ -3,6 +3,8 @@ import { deleteData, editData, getData, logoutUser , sendData} from '../configs/
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../configs/firebase/firebaseConfig';
 import Blog from '../components/Blog';
+import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 
 const Dashboard = () => {
   const [data, setData] = useState([])
@@ -56,65 +58,35 @@ const Dashboard = () => {
       console.log(result)
     }
 
-    // const handleEditBlog = async (item, docid, updateObj) => {
-    //   const result = editData("blogs", docid.docid, updateObj)
-    // }
-
-    function getIndexOnEidt(index, titlemain, descriptionmain){
-      console.log("index===>",index)
-      console.log(data[index])
-      titlemain.current.value = data[index].title
-      descriptionmain.current.value = data[index].description
-    }
     
-    // const handleEditBlog = async (docid, title, desc) => {
-    //   let result = await editData("blogs", docid.docid, title, desc)
-    //   setData(prev => {
-    //     const newData = prev;
-    //     newData[docid.index] = {title, description: desc}
-    //     return newData
-    //   })
-    // }
-
-    // const handleUpdateBlog = async(docid, updatedData) => {
-    //   try {
-    //     const result = await editData("blogs", docid, updatedData);
-    //     if (result.success) {
-    //       setData(prevData => prevData.map((item, index) => {
-    //         if (index === docid.index) {
-    //           return { ...item, ...updatedData };
-    //         }
-    //         return item;
-    //       }));
-    //       toast.success("Blog updated successfully");
-    //     }
-    //   } catch (error) {
-    //     toast.error("Failed to update blog");
-    //     console.error(error);
-    //   } finally {
-    //     setEditingId(null); // Exit edit mode
-    //   }
-    // };
-
   return (
-    <>
-    <h1>
-      Dashboard
-    </h1>
-    <button type="button" onClick={handleLogout}>Logout</button>
-    <form onSubmit={handleSendData} className='flex flex-col gap-4 justify-center items-center'>
-        <input type="text" placeholder="title [25-50]" minLength={5} maxLength={50} className="input input-bordered w-full max-w-xs" ref={title}  required/>
-        <textarea className="textarea textarea-bordered w-[20rem]" minLength={5} placeholder="What is in your mind? [ 100 > ]" ref={description} required></textarea>
+    <div className='bg-[#f8f9fa] min-h-screen'>
+    {/* <h1>Dashboard</h1>
+    <button type="button" onClick={handleLogout}>Logout</button> */}
+    <Navbar />
+    <Header title={"Dashboard"}/>
+    <div className='grid place-items-center'>
 
-        <button type='submit' className="btn btn-primary" > {loading ? <span className="loading loading-spinner loading-sm"></span> : 'Publish Blogs'}</button>
+    <div className='bg-white shadow-lg w-3/5 -ml-12 px-28 py-8 mt-36'>
+      <form onSubmit={handleSendData} className='flex flex-col gap-4 justify-center items-center'>
+        <input type="text" placeholder="title [25-50]" minLength={5} maxLength={50} className="input input-bordered w-full rounded" ref={title}  required/>
+        <textarea className="textarea textarea-bordered min-h-44 w-full rounded" minLength={5} placeholder="What is in your mind? [ 100 > ]" ref={description} required></textarea>
+
+        <button type='submit' className="btn btn-primary self-start" > {loading ? <span className="loading loading-spinner loading-sm"></span> : 'Publish Blogs'}</button>
       </form>
+    </div>
+
+    <div className='w-3/5 mt-4'>
+
+      <h2 className='text-2xl mb-2 font-semibold'>My Blogs</h2>
       {data.length > 0 && data.map((e , i)=> {
-        // {dbDocId && console.log(dbDocId)}
-        return <Blog key={i} title={e.title} description={e.description} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} e={e} index={i} handleDeleteBlog={handleDeleteBlog} handleEditBlog={getIndexOnEidt} titlemain={title} descriptionmain={description}/>
+        return <Blog key={i} title={e.title} description={e.description} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} e={e} index={i} handleDeleteBlog={handleDeleteBlog}/>
       }
-      )}
+    )}
+    </div>
+    </div>
       
-    </>
+    </div>
   )
 }
 

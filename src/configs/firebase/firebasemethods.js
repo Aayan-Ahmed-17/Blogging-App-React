@@ -137,22 +137,24 @@ const getData = async (collectionName, searchProperty, compareProperty, setData)
     const q = query(collection(db, collectionName), where(searchProperty, "==", compareProperty));
 
     const resData = []
-const querySnapshot = await getDocs(q);
-querySnapshot.forEach((doc) => {
-  console.log(doc.id, " => ", doc.data());
-  resData.push({...doc.data() , docid: doc.id})
-});
-        setData((prev)=>[...prev, ...resData])
-        console.log(resData, doc.id)
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        resData.push({...doc.data() , docid: doc.id})
+    });
+    setData((prev)=>[...prev, ...resData])
+    console.log(resData, doc.id)
 }
 
-const getAllData = async (collectionName) => {
-
-const querySnapshot = await getDocs(collection(db, collectionName));
-querySnapshot.forEach((doc) => {
-  console.log(doc.data());
-});
-}
+const getAllData = async (collectionName, setData) => {
+    const resData = [];
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data());
+      resData.push({ ...doc.data(), docid: doc.id });
+    });
+    setData(resData);
+  };
 
 const deleteData = async (collectionName, docid) => {
     await deleteDoc(doc(db, collectionName, docid));

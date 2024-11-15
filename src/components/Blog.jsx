@@ -1,25 +1,20 @@
 import React, {useState} from "react";
 
-const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, e, index, handleDeleteBlog, handleEditBlog, titlemain, descriptionmain}) => {
+const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, index, handleDeleteBlog}) => {
 
-    // card title
-    // userid & image
-    // date
-    // card body
-    // edit seeall none
     return(
         <>
-            <div className="w-3/5 rounded p-5 bg-black"> {/** card container */}
-                <div className="min-h-28 bg-green-400 flex gap-4 items-center">
+            <div className="w-full rounded-lg p-5 bg-white -ml-7 mb-6 shadow-md"> {/** card container */}
+                <div className="min-h-28 flex gap-4 items-center">
                     <img src="../../src/assets/images/profile-image1.png" alt="profile" className="h-24"/>
-                    <div className="min-h-24 bg-white w-1/2">
+                    <div className="min-h-24 w-1/2 ">
                         <p className="text-2xl leading-7 font-semibold text-gray-700">{title} </p>
                         <p className="text-gray-600 font-medium mt-2">Inzamam Malik - <span>August 16th, 2023</span></p>
                     </div>
                 </div> {/** card header */}
                 <div className=" text-gray-500 min-h-60 mt-2"><p>{description}</p></div> {/** card Body */}
                 {modify && <div className="bg-white flex gap-4 mt-3">
-                    <button type="button" className="text-purple-700" onClick={()=>handleEditBlog(index, titlemain, descriptionmain)}>Edit</button>
+                    <button type="button" className="text-purple-700">Edit</button>
                     <button type="button" className="text-purple-700" onClick={() => {
                 setDbDocId({
                   docid: docId,
