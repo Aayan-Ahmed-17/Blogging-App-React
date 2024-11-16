@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [data, setData] = useState([])
   const [dbDocId, setDbDocId] = useState(null);
   const [loading, setLoading] = useState()
+  const [mode, setMode] = useState("modify")
 
   const title = useRef()
   const description = useRef()
@@ -80,7 +81,7 @@ const Dashboard = () => {
 
       <h2 className='text-2xl mb-2 font-semibold'>My Blogs</h2>
       {data.length > 0 && data.map((e , i)=> {
-        return <Blog key={i} title={e.title} description={e.description} modify={true} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} e={e} index={i} handleDeleteBlog={handleDeleteBlog}/>
+        return <Blog key={i} title={e.title} description={e.description} mode={mode} dbDocId={dbDocId} setDbDocId={setDbDocId} docId={e.docid} e={e} index={i} handleDeleteBlog={handleDeleteBlog}/>
       }
     )}
     </div>

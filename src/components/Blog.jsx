@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 
-const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, index, handleDeleteBlog}) => {
+const Blog = ({title, description, mode, dbDocId, setDbDocId, docId, e, index, handleDeleteBlog, handleUserRedirect}) => {
 
     return(
         <>
             <div className="w-full rounded-lg p-5 bg-white -ml-7 mb-6 shadow-md"> {/** card container */}
-                <div className="min-h-28 flex gap-4 items-center">
+                <div className="min-h-28 min-w-[45rem] flex gap-4 items-center">
                     <img src="../../src/assets/images/profile-image1.png" alt="profile" className="h-24"/>
                     <div className="min-h-24 w-1/2 ">
                         <p className="text-2xl leading-7 font-semibold text-gray-700">{title} </p>
@@ -13,7 +13,7 @@ const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, i
                     </div>
                 </div> {/** card header */}
                 <div className=" text-gray-500 min-h-60 mt-2"><p>{description}</p></div> {/** card Body */}
-                {modify && <div className="bg-white flex gap-4 mt-3">
+                {mode == "modify" && <div className="bg-white flex gap-4 mt-3">
                     <button type="button" className="text-purple-700">Edit</button>
                     <button type="button" className="text-purple-700" onClick={() => {
                 setDbDocId({
@@ -36,6 +36,7 @@ const Blog = ({title, description, modify = false, dbDocId, setDbDocId, docId, i
                         </div>
                     </div>
                 </dialog>
+                {mode == "view" && <button className="text-[#7749F8] text-lg" onClick={() => handleUserRedirect(e.uid)}>see all from this user</button>}
             </div>
         </>
     )

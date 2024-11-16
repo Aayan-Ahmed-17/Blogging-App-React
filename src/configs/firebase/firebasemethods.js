@@ -180,4 +180,17 @@ const editData = async (collectionName, docid, updatedData) => {
     }
   };
 
-export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData, deleteData, editData}
+const getUserInfo = async (collectionName, searchProperty, compareProperty, setUserInfo) => {
+    const q = query(collection(db, collectionName), where(searchProperty, "==", compareProperty));
+
+    // const resData = []
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        setUserInfo(doc.data())
+    });
+    // setData((prev)=>[...prev, ...resData])
+    // console.log(resData, doc.id)
+}
+
+export {signUpUser , loginUser , logoutUser , sendData, getData, getAllData, deleteData, editData, getUserInfo}
