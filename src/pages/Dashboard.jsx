@@ -1,5 +1,5 @@
 import React, { useRef, useState , useEffect } from 'react'
-import { deleteData, editData, getData, logoutUser , sendData} from '../configs/firebase/firebasemethods'
+import { deleteData, editData, getData, logoutUser , sendData , getUserInfo} from '../configs/firebase/firebasemethods'
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../configs/firebase/firebaseConfig';
 import Blog from '../components/Blog';
@@ -11,9 +11,14 @@ const Dashboard = () => {
   const [dbDocId, setDbDocId] = useState(null);
   const [loading, setLoading] = useState()
   const [mode, setMode] = useState("modify")
+  const [userInfo, setUserInfo] = useState()
 
   const title = useRef()
   const description = useRef()
+
+  useEffect(()=>{
+    getUserInfo("users", "uid", auth.currentUser.uid, setUserInfo)
+  }, [])
 
   const navigate = useNavigate()
 
@@ -64,14 +69,14 @@ const Dashboard = () => {
     <div className='bg-[#f8f9fa] min-h-screen'>
     {/* <h1>Dashboard</h1>
     <button type="button" onClick={handleLogout}>Logout</button> */}
-    <Navbar />
+    <Navbar userName={userInfo}/>
     <Header title={"Dashboard"}/>
     <div className='grid place-items-center'>
 
     <div className='bg-white shadow-lg w-3/5 -ml-12 px-28 py-8 mt-36'>
       <form onSubmit={handleSendData} className='flex flex-col gap-4 justify-center items-center'>
         <input type="text" placeholder="title [25-50]" minLength={5} maxLength={50} className="input input-bordered w-full rounded" ref={title}  required/>
-        <textarea className="textarea textarea-bordered min-h-44 w-full rounded" minLength={5} placeholder="What is in your mind? [ 100 > ]" ref={description} required></textarea>
+        <textarea className="textarea textarea-bordered min-h-44 max-h-72 w-full rounded" minLength={5} placeholder="What is in your mind? [ 100 > ]" ref={description} required></textarea>
 
         <button type='submit' className="btn btn-primary self-start" > {loading ? <span className="loading loading-spinner loading-sm"></span> : 'Publish Blogs'}</button>
       </form>

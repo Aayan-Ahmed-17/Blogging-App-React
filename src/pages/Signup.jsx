@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import Form from '../components/Form'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { signUpUser } from '../configs/firebase/firebasemethods'
+import Navbar from '../components/Navbar'
 
 const Signup = () => {
   const [error, setError] = useState(false)
@@ -30,20 +31,10 @@ const Signup = () => {
 };
 
   return (
-    // <main className='bg-green-300 min-h-screen flex justify-center items-center'>
-    //   <div className='max-w-[18rem] bg-red-200 pt-10 min-h-[21rem] box-border rounded-md'>
-    //     <form className='flex flex-wrap gap-2 justify-center' onSubmit={handleRegistration}>
-    //     {/* <input type="text" placeholder="First Name" className="min-h-8 text-sm px-2 rounded border border-gray-400 w-4/5 max-w-xs " ref={firstName}/> */}
-    //     <input type="text" placeholder="Last Name" className="min-h-8 text-sm px-2 rounded border border-gray-400 w-4/5 max-w-xs" ref={fullName}/>
-    //     <input type="email" placeholder="Email" className="min-h-8 text-sm px-2 rounded border border-gray-400 w-4/5 max-w-xs" ref={email}/>
-    //     <input type="password" placeholder="Password" className="min-h-8 text-sm px-2 rounded border border-gray-400 w-4/5 max-w-xs" ref={password}/>
-    //     {/* <input type="password" placeholder="Repeat Password" className="min-h-8 text-sm px-2 rounded border border-gray-400 w-4/5 max-w-xs ml-2" ref={repeatPassword}/> */}
-    //     <br />
-    //     <button type="submit" className='bg-indigo-500 text-white text-lg px-4 py-1 rounded-lg mt-2'>Signup</button>
-    //     </form>
-    //   </div>
-    // </main>
+    <div className='-mt-8'>
+    <Navbar authText='Login' />
     <Form name={"Register User"} onSubmitFunc={handleRegistration} emailRef={email} passwordRef={password} showConfirmPassword={true} confirmPasswordRef={confirmPassword}/>
+    </div>
   )
 }
 

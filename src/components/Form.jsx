@@ -26,7 +26,7 @@ const Form = ({ name, showConfirmPassword = false, onSubmitFunc , emailRef, pass
   return (
     <form
       onSubmit={fieldData}
-      className="w-2/6 mx-auto grid gap-3 border-2 border-black px-5 py-10 rounded-xl mt-16"
+      className="w-2/6 mx-auto grid gap-3 border-2 border-black px-5 py-10 rounded-xl mt-40"
     >
       <h2 className="text-center text-3xl">{name}</h2>
       <label className="input input-bordered flex items-center gap-2">

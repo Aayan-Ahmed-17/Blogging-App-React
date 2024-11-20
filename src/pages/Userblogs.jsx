@@ -48,7 +48,7 @@ const Userblogs = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar authText='Logout'/>
       <Header title={"< Back to all blogs"}/>
       {userInfo && <div className="flex justify-between mt-32 pr-16">
       <h2 className=" text-2xl mb-2 -mt-7 ml-16 font-semibold">{`All from ${userInfo.fullName}`}</h2>

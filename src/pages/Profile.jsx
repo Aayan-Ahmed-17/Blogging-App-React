@@ -10,10 +10,10 @@ const Profile = () => {
   useEffect(()=>{
     getUserInfo("users", "uid", auth.currentUser.uid, setUserInfo)
   }, [])
-
+  
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-8">
-      <Navbar />
+      <Navbar userName={userInfo}/>
       <Header title={"Profile"} />
       {/* <div className="bg-white grid place-items-center"> */}
         {userInfo && <div className="w-3/5 bg-white min-h-[35rem] min-w-96 ml-32 p-5 mt-36 shadow-lg">
