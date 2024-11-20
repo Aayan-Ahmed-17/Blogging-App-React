@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <>
-    <Navbar authText='Sign Up' />
+    <Navbar authText='SignUp'/>
     <Form name={"Login User"} onSubmitFunc={handleLogin} emailRef={email} passwordRef={password}/>
     </>
   )

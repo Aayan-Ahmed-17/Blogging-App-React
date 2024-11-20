@@ -32,7 +32,7 @@ const Signup = () => {
 
   return (
     <div className='-mt-8'>
-    <Navbar authText='Login' />
+    <Navbar />
     <Form name={"Register User"} onSubmitFunc={handleRegistration} emailRef={email} passwordRef={password} showConfirmPassword={true} confirmPasswordRef={confirmPassword}/>
     </div>
   )

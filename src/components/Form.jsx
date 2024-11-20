@@ -98,7 +98,7 @@ const Form = ({ name, showConfirmPassword = false, onSubmitFunc , emailRef, pass
         type="submit"
         className="bg-blue-500 text-white rounded-lg max-w-2/5 justify-self-end py-2 px-3 box-content text-xl"
       >
-        {name}
+        Submit
       </button>
     </form>
   );
