@@ -7,16 +7,16 @@ import Navbar from '../components/Navbar'
 const Signup = () => {
   const [error, setError] = useState(false)
 
-  const fullName = useRef()
+  const firstName = useRef()
+  const lastName = useRef()
   const email = useRef()
   const password = useRef()
-  const confirmPassword = useRef()
  
   const navigate = useNavigate()
 
   const handleRegistration = async () => {
     
-    const result = await signUpUser(email.current.value, password.current.value, fullName.current.value);
+    const result = await signUpUser(email.current.value, password.current.value, firstName.current?.value, lastName.current?.value);
     
     // result is obj returned thr signUpUser func
     if (result.success) {
@@ -33,7 +33,7 @@ const Signup = () => {
   return (
     <div className='-mt-8'>
     <Navbar />
-    <Form name={"Register User"} onSubmitFunc={handleRegistration} emailRef={email} passwordRef={password} showConfirmPassword={true} confirmPasswordRef={confirmPassword}/>
+    <Form name={"Register User"} onSubmitFunc={handleRegistration} emailRef={email} passwordRef={password} firstNameRef={firstName} lastNameRef={lastName}/>
     </div>
   )
 }

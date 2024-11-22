@@ -12,6 +12,8 @@ const Userblogs = () => {
   const [loading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState()
   const { id } = useParams();
+  let time = new Date
+  let date = time.toDateString()
 
   const getUserBlogs = async (uid) => {
     try {
@@ -51,13 +53,13 @@ const Userblogs = () => {
       <Navbar />
       <Header title={"< Back to all blogs"}/>
       {userInfo && <div className="flex justify-between mt-32 pr-16">
-      <h2 className=" text-2xl mb-2 -mt-7 ml-16 font-semibold">{`All from ${userInfo.fullName}`}</h2>
+      <h2 className=" text-2xl mb-2 -mt-7 ml-16 font-semibold">{`All from ${userInfo.firstName} ${userInfo.lastName}`}</h2>
         <div className="w-3/5 mt-4 -ml-16">
           {/* <h2 className='text-2xl mb-2 font-semibold'>My Blogs</h2> */}
           {userBlogs.length > 0 &&
             userBlogs.map((e, i) => {
               return (
-                <Blog key={i} title={e.title} description={e.description} />
+                <Blog key={i} userName={userInfo.firstName + ' ' + userInfo.lastName} time={date} title={e.title} description={e.description} />
               );
             })}
         </div>

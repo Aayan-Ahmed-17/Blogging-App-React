@@ -2,7 +2,7 @@ import {app, auth, db} from './firebaseConfig'
 import { createUserWithEmailAndPassword, updateProfile , signInWithEmailAndPassword , signOut } from 'firebase/auth';
 import { collection , addDoc , query, where, getDocs , doc, deleteDoc , updateDoc } from 'firebase/firestore';
 
-const signUpUser = async (email, password, fullName) => {
+const signUpUser = async (email, password, firstName, lastName) => {
     try {
         // Create new user with email and password
         const userCredential = await createUserWithEmailAndPassword(
@@ -12,7 +12,7 @@ const signUpUser = async (email, password, fullName) => {
         );
 
         // Update user profile with display name
-        const docRef = await addDoc(collection(db, "users"), {email, fullName, uid: userCredential.user.uid});
+        const docRef = await addDoc(collection(db, "users"), {email, firstName, lastName, uid: userCredential.user.uid});
         console.log("Document written with ID: ", docRef.id);
 
         return {
@@ -155,6 +155,16 @@ const getAllData = async (collectionName, setData) => {
     });
     setData(resData);
   };
+
+//   const getAllDatawithuidInfo = async (collectionName, setData) => {
+//     const resData = [];
+//     const querySnapshot = await getDocs(collection(db, collectionName));
+//     querySnapshot.forEach((doc) => {
+//       console.log(doc.data());
+//       resData.push({ ...doc.data(), docid: doc.id });
+//     });
+//     setData(resData);
+//   };
 
 const deleteData = async (collectionName, docid) => {
     await deleteDoc(doc(db, collectionName, docid));

@@ -9,6 +9,7 @@ const Profile = () => {
 
   useEffect(()=>{
     getUserInfo("users", "uid", auth.currentUser.uid, setUserInfo)
+    console.log(setUserInfo)
   }, [])
   
   return (
@@ -18,7 +19,7 @@ const Profile = () => {
       {/* <div className="bg-white grid place-items-center"> */}
         {userInfo && <div className="w-3/5 bg-white min-h-[35rem] min-w-96 ml-32 p-5 mt-36 shadow-lg">
           <img src="../src/assets/images/profile-image1.png" alt="profile image" className="w-1/4 mb-11"/>
-          <p className="text-2xl font-semibold mb-3">{userInfo.fullName}</p>
+          <p className="text-2xl font-semibold mb-3">{userInfo.firstName} {userInfo.lastName}</p>
           <p className="text-2xl font-semibold">Password</p>
           <form className="grid gap-2 mt-4">
 

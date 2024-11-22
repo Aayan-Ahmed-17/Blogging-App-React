@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const Blog = ({title, description, mode, dbDocId, setDbDocId, docId, e, index, handleDeleteBlog, handleUserRedirect}) => {
+const Blog = ({userName, time , title, description, mode, dbDocId, setDbDocId, docId, e, index, handleDeleteBlog, handleUserRedirect}) => {
 
     return(
         <>
@@ -9,7 +9,7 @@ const Blog = ({title, description, mode, dbDocId, setDbDocId, docId, e, index, h
                     <img src="../../src/assets/images/profile-image1.png" alt="profile" className="h-24"/>
                     <div className="min-h-24 w-1/2 ">
                         <p className="text-2xl leading-7 font-semibold text-gray-700">{title} </p>
-                        <p className="text-gray-600 font-medium mt-2">Inzamam Malik - <span>August 16th, 2023</span></p>
+                        <p className="text-gray-600 font-medium mt-2">{userName} - <span>{time}</span></p>
                     </div>
                 </div> {/** card header */}
                 <div className=" text-gray-500 min-h-60 mt-2"><p>{description}</p></div> {/** card Body */}
