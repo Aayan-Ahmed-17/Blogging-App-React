@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRef } from "react";
+import SelectAvatar from "./SelectAvatar";
 
 const Form = ({
   name,
@@ -8,7 +9,10 @@ const Form = ({
   passwordRef,
   firstNameRef,
   lastNameRef,
+  setIndex,
+  index
 }) => {
+  // const [index, setIndex] = useState()
   let formData;
   function fieldData(event) {
     event.preventDefault();
@@ -17,7 +21,9 @@ const Form = ({
           firstName: firstNameRef.current.value,
           lastName: lastNameRef.current.value,
           email: emailRef.current.value,
-          password: passwordRef.current.value
+          password: passwordRef.current.value,
+          index: index,
+          index2: "index2 tou chl rha hai"
         })
       : (formData = {
           email: emailRef.current.value,
@@ -34,6 +40,7 @@ const Form = ({
       <h2 className="text-center text-3xl">{name}</h2>
       {firstNameRef && (
         <>
+          <SelectAvatar setIndex={setIndex} required={true}/>
           <label className="input input-bordered flex items-center gap-2">
             <input
               type="text"

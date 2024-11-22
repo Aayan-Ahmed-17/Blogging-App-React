@@ -21,7 +21,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-const signUpUser = async (email, password, firstName, lastName) => {
+const signUpUser = async (email, password, firstName, lastName, index) => {
   try {
     // Create new user with email and password
     const userCredential = await createUserWithEmailAndPassword(
@@ -36,6 +36,7 @@ const signUpUser = async (email, password, firstName, lastName) => {
       firstName,
       lastName,
       uid: userCredential.user.uid,
+      index: index
     });
     console.log("Document written with ID: ", docRef.id);
 
