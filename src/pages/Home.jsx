@@ -1,19 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Blog from "../components/Blog";
-import { getAllData } from "../configs/firebase/firebasemethods";
+import { getAllData, getUserInfo } from "../configs/firebase/firebasemethods";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
+import { useInRouterContext, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
   const [mode, setMode] = useState('view')
+  let time = new Date
+  let date = time.toDateString()
 
   const navigate = useNavigate()
 
   useEffect(() => {
     getAllData("blogs", setData);
   }, []);
+
+  
+    
+  useEffect(() => {
+      if (data.length > 0) {
+        data.map(e => getUserInfo("users", "uid", e.uid, setUserInfo))
+        console.log(userInfo,data)
+      }
+      }, []);
+    // console.log(userInfo, data[0].uid)
+  
 
   const handleUserRedirect = (userId) => {
     navigate(`/user/${userId}`);
@@ -30,7 +44,7 @@ const Home = () => {
           {data.length > 0 &&
             data.map((e, i) => {
               return (
-                <Blog key={i} mode={mode} title={e.title} description={e.description} handleUserRedirect={handleUserRedirect} e={e}/>
+                <Blog key={i} time={date} mode={mode} title={e.title} description={e.description} handleUserRedirect={handleUserRedirect} e={e}/>
               );
             })}
         </div>
