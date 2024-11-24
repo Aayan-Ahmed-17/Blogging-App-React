@@ -69,7 +69,7 @@ const Dashboard = () => {
     <div className='bg-[#f8f9fa] min-h-screen'>
     {/* <h1>Dashboard</h1>
     <button type="button" onClick={handleLogout}>Logout</button> */}
-    <Navbar userName={userInfo}/>
+    <Navbar />
     <Header title={"Dashboard"}/>
     <div className='grid place-items-center'>
 

@@ -20,7 +20,7 @@ const Profile = () => {
 
   useEffect(()=>{
     getUserInfo("users", "uid", auth.currentUser.uid, setUserInfo)
-    console.log(userInfo)
+    console.log(userInfo, auth.currentUser.uid)
   }, [])
   
   const handlePasswordChange = async (e) => {
@@ -66,11 +66,11 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-[#f8f9fa] min-h-screen pb-8">
-      <Navbar userName={userInfo}/>
+    <div className="bg-[#f8f9fa] min-h-screen py-8">
+      <Navbar userName={userInfo} authText={"Logout"}/>
       <Header title={"Profile"} />
       {/* <div className="bg-white grid place-items-center"> */}
-        {userInfo && <div className="w-3/5 bg-white min-h-[35rem] min-w-96 ml-32 p-5 mt-36 shadow-lg">
+        {userInfo && <div className="w-[40rem] bg-white min-h-[35rem] min-w-96 ml-32 p-5 mt-32 shadow-lg">
           <img src="../src/assets/images/profile-image1.png" alt="profile image" className="w-1/4 mb-11"/>
           <p className="text-2xl font-semibold mb-3">{userInfo.firstName} {userInfo.lastName}</p>
           <p className="text-2xl font-semibold">Password</p>

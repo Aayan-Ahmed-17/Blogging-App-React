@@ -11,7 +11,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
   const [mode, setMode] = useState('view');
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   let time = new Date
   let date = time.toDateString()
 
@@ -23,11 +23,9 @@ const Home = () => {
 
   
   useEffect(() => {
-    console.log("starting")
     const fetchUserInfo = async () => {
-      console.log("starting")
       if (data.length > 0) {
-        setIsLoading(true);
+        setLoading(true);
         try {
           // Create an array to store all user info
           let allUserInfo = [];
@@ -55,7 +53,7 @@ const Home = () => {
         } catch (error) {
           console.error("Error fetching user info:", error);
         } finally {
-          setIsLoading(false);
+          setLoading(false);
         }
       }
     };
@@ -63,10 +61,6 @@ const Home = () => {
     fetchUserInfo();
   }, [data]);
   
-  // Add another useEffect to see userInfo updates
-  useEffect(() => {
-    userInfo.length > 0 && console.log("userInfo updated:", userInfo);
-  }, [userInfo]);
     // console.log(userInfo, data[0].uid)
   
 
@@ -79,7 +73,7 @@ const Home = () => {
       <Navbar />
       <Header title={"Home"} />
       <div className="grid place-items-center mt-28">
-        <div className="w-3/5 -ml-16">
+        {userInfo.length > 0 ? <div className="w-3/5 -ml-16 pt-4">
       <h2 className="place-self-start -ml-6 text-2xl mb-2 font-semibold">All Blogs</h2>
           {/* <h2 className='text-2xl mb-2 font-semibold'>My Blogs</h2> */}
           {userInfo.length > 0 &&
@@ -88,7 +82,7 @@ const Home = () => {
                 <Blog key={i} userName={`${e.firstName.toUpperCase()} ${e.lastName.toUpperCase()}`} time={date} mode={mode} title={e.blogData.title} description={e.blogData.description} handleUserRedirect={handleUserRedirect} e={e}/>
               );
             })}
-        </div>
+        </div> : <h1 className="text-3xl font-bold">Loading....</h1>}
       </div>
     </div>
   );

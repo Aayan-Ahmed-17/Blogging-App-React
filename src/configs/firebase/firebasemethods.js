@@ -38,7 +38,7 @@ const signUpUser = async (email, password, firstName, lastName, index) => {
       uid: userCredential.user.uid,
       index: index
     });
-    console.log("Document written with ID: ", docRef.id);
+    // console.log("Document written with ID: ", docRef.id);
 
     return {
       success: true,
@@ -186,7 +186,7 @@ const sendData = async (collectionName, obj, setLoading, setData) => {
   try {
     setLoading(true);
     const docRef = await addDoc(collection(db, collectionName), obj);
-    console.log("Document written with ID: ", docRef.id);
+    // console.log("Document written with ID: ", docRef.id);
     const newBlog = { ...obj, docId: docRef.id };
     setData((prev) => [...prev, newBlog]);
     return {
@@ -218,18 +218,18 @@ const getData = async (
   const resData = [];
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
+    // console.log(doc.id, " => ", doc.data());
     resData.push({ ...doc.data(), docid: doc.id });
   });
   setData((prev) => [...prev, ...resData]);
-  console.log(resData, doc.id);
+  // console.log(resData, doc.id);
 };
 
 const getAllData = async (collectionName, setData) => {
   const resData = [];
   const querySnapshot = await getDocs(collection(db, collectionName));
   querySnapshot.forEach((doc) => {
-    console.log(doc.data());
+    // console.log(doc.data());
     resData.push({ ...doc.data(), docid: doc.id });
   });
   setData(resData);
@@ -239,7 +239,7 @@ const getAllData = async (collectionName, setData) => {
 //     const resData = [];
 //     const querySnapshot = await getDocs(collection(db, collectionName));
 //     querySnapshot.forEach((doc) => {
-//       console.log(doc.data());
+      // console.log(doc.data());
 //       resData.push({ ...doc.data(), docid: doc.id });
 //     });
 //     setData(resData);
@@ -280,12 +280,13 @@ const getUserInfo = async (
     where(searchProperty, "==", compareProperty)
   );
 
-  // const resData = []
+  const resData = []
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    setUserInfo(doc.data());
+    // console.log(doc.id, " => ", doc.data());
+    resData.push(doc.data());
   });
+  setUserInfo(resData)
   // setData((prev)=>[...prev, ...resData])
   // console.log(resData, doc.id)
 };
