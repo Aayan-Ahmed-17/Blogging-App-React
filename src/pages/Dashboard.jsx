@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar';
 const Dashboard = () => {
   const [data, setData] = useState([])
   const [dbDocId, setDbDocId] = useState(null);
+  const [inputVal, setInputVal] = useState('')
   const [loading, setLoading] = useState()
   const [mode, setMode] = useState("modify")
   const [userInfo, setUserInfo] = useState()
@@ -39,16 +40,24 @@ const Dashboard = () => {
     const handleSendData = async (event) => {
       event.preventDefault();
       let obj = {
-        title: title.current.value,
-        description: description.current.value,
-        uid: auth.currentUser.uid,
+          title: title.current.value,
+          description: description.current.value,
+          uid: auth.currentUser.uid,
       }
       const result = await sendData("blogs", obj, setLoading, setData)
-      if (result.success){
-        console.log(result.message)
+      
+      if (result.success) {
+          console.log(result.message);
+          // Clear input fields after successful submission
+          title.current.value = '';
+          description.current.value = '';
       } else {
-        console.log(result.error);
+          console.log(result.error);
       }
+  }
+
+    const clearInputOnSubmit = () => {
+      setInputVal('')
     }
     
     useEffect(() => {
@@ -73,9 +82,9 @@ const Dashboard = () => {
     <Header title={"Dashboard"}/>
     <div className='grid place-items-center'>
 
-    <div className='bg-white shadow-lg w-3/5 -ml-12 px-28 py-8 mt-36'>
+    <div className='bg-white shadow-lg w-3/5 -ml-12 px-28 py-8 mt-40'>
       <form onSubmit={handleSendData} className='flex flex-col gap-4 justify-center items-center'>
-        <input type="text" placeholder="title [25-50]" minLength={5} maxLength={50} className="input input-bordered w-full rounded" ref={title}  required/>
+        <input type="text"  placeholder="title [25-50]" minLength={5} maxLength={50} className="input input-bordered w-full rounded" ref={title}  required/>
         <textarea className="textarea textarea-bordered min-h-44 max-h-72 w-full rounded" minLength={5} placeholder="What is in your mind? [ 100 > ]" ref={description} required></textarea>
 
         <button type='submit' className="btn btn-primary self-start" > {loading ? <span className="loading loading-spinner loading-sm"></span> : 'Publish Blogs'}</button>

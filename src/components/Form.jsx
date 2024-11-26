@@ -29,12 +29,12 @@ const Form = ({
   return (
     <form
       onSubmit={fieldData}
-      className="w-96 mx-auto grid gap-3 border-2 border-black px-5 py-10 rounded-xl mt-40"
+      className="w-96 mx-auto grid gap-3 border-2 border-black px-5 py-8 rounded-md mt-40"
     >
-      <h2 className="text-center text-3xl">{name}</h2>
+      <h2 className="text-center text-3xl -mt-4 mb-5 font-semibold">{name}</h2>
       {firstNameRef && (
         <>
-          <label className="input input-bordered flex items-center gap-2">
+          <label className="input input-bordered rounded-none flex items-center gap-2">
             <input
               type="text"
               className="grow"
@@ -45,7 +45,7 @@ const Form = ({
               required
             />
           </label>
-          <label className="input input-bordered flex items-center gap-2">
+          <label className="input input-bordered rounded-none flex items-center gap-2">
             <input
               type="text"
               className="grow"
@@ -58,7 +58,7 @@ const Form = ({
           </label>
         </>
       )}
-      <label className="input input-bordered flex items-center gap-2">
+      <label className="input input-bordered rounded-none flex items-center gap-2">
         <input
           type="text"
           className="grow"
@@ -69,18 +69,19 @@ const Form = ({
           required
         />
       </label>
-      <label className="input input-bordered flex items-center gap-2">
+      <label className="input input-bordered rounded-none flex items-center gap-2">
         <input
           type="password"
           className="grow"
           placeholder="Password"
           name="password"
           ref={passwordRef}
+          required
         />
       </label>
       <button
         type="submit"
-        className="bg-blue-500 text-white rounded-lg max-w-2/5 justify-self-end py-2 px-3 box-content text-xl"
+        className="bg-blue-500 text-white rounded-md max-w-2/4 justify-self-end py-2 px-5 box-content text-xl"
       >
         Submit
       </button>

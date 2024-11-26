@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Blog from "../components/Blog";
 import { collection , addDoc , query, where, getDocs , doc, deleteDoc , updateDoc } from 'firebase/firestore';
 import { db } from "../configs/firebase/firebaseConfig";
-import { getAllData, getUserInfo } from "../configs/firebase/firebasemethods";
+import { getAllData} from "../configs/firebase/firebasemethods";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import { useInRouterContext, useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ const Home = () => {
           }
           
           setUserInfo(allUserInfo); // No need for spread operator here
-          console.log(data, allUserInfo);
+          // console.log(data, allUserInfo);
         } catch (error) {
           console.error("Error fetching user info:", error);
         } finally {
@@ -72,7 +72,7 @@ const Home = () => {
     <div className="bg-[#f8f9fa] min-h-screen">
       <Navbar />
       <Header title={"Home"} />
-      <div className="grid place-items-center mt-28">
+      <div className="grid place-items-center mt-32">
         {userInfo.length > 0 ? <div className="w-3/5 -ml-16 pt-4">
       <h2 className="place-self-start -ml-6 text-2xl mb-2 font-semibold">All Blogs</h2>
           {/* <h2 className='text-2xl mb-2 font-semibold'>My Blogs</h2> */}
@@ -82,7 +82,7 @@ const Home = () => {
                 <Blog key={i} userName={`${e.firstName.toUpperCase()} ${e.lastName.toUpperCase()}`} time={date} mode={mode} title={e.blogData.title} description={e.blogData.description} handleUserRedirect={handleUserRedirect} e={e}/>
               );
             })}
-        </div> : <h1 className="text-3xl font-bold">Loading....</h1>}
+        </div> : <h1 className="text-3xl font-bold mt-10">Loading....</h1>}
       </div>
     </div>
   );

@@ -36,7 +36,6 @@ const signUpUser = async (email, password, firstName, lastName, index) => {
       firstName,
       lastName,
       uid: userCredential.user.uid,
-      index: index
     });
     // console.log("Document written with ID: ", docRef.id);
 
@@ -277,18 +276,14 @@ const getUserInfo = async (
 ) => {
   const q = query(
     collection(db, collectionName),
-    where(searchProperty, "==", compareProperty)
+    where(searchProperty, "==", compareProperty, auth.currentUser.uid)
   );
 
-  const resData = []
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    // console.log(doc.id, " => ", doc.data());
-    resData.push(doc.data());
+    setUserInfo(doc.data());
+    console.log(doc.data())
   });
-  setUserInfo(resData)
-  // setData((prev)=>[...prev, ...resData])
-  // console.log(resData, doc.id)
 };
 
 export {

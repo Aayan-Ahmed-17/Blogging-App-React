@@ -4,7 +4,7 @@ const Blog = ({userName, time , title, description, mode, dbDocId, setDbDocId, d
 
     return(
         <>
-            <div className="w-full rounded-lg p-5 bg-white -ml-7 mb-6 shadow-md"> {/** card container */}
+            <div className="w-full rounded-lg p-5 bg-white -ml-7 mb-6 shadow-xl"> {/** card container */}
                 <div className="min-h-28 min-w-[45rem] flex gap-4 items-center">
                     <img src="../../src/assets/images/profile-image1.png" alt="profile" className="h-24"/>
                     <div className="min-h-24 w-1/2 ">
